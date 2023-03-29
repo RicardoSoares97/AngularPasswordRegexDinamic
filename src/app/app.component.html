@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 my-4">
+      <div class="row">
+        <div class="col-2">
+          <p>Verify Lowercase</p>
+          <p-inputSwitch [(ngModel)]="checkLower" (ngModelChange)="OnChangeParametrization()"></p-inputSwitch>
+        </div>
+        <div class="col-2">
+          <p>Verify Uppercase</p>
+          <p-inputSwitch [(ngModel)]="checkUpper" (ngModelChange)="OnChangeParametrization()"></p-inputSwitch>
+        </div>
+        <div class="col-2">
+          <p>Verify Numeric Digits</p>
+          <p-inputSwitch [(ngModel)]="checkNumeric" (ngModelChange)="OnChangeParametrization()"></p-inputSwitch>
+        </div>
+        <div class="col-2">
+          <p>Verify Special Characters</p>
+          <p-inputSwitch [(ngModel)]="checkSymbol" (ngModelChange)="OnChangeParametrization()"></p-inputSwitch>
+        </div>
+        <div class="col-2">
+          <p>Verify Spaces</p>
+          <p-inputSwitch [(ngModel)]="checkSpace" (ngModelChange)="OnChangeParametrization()"></p-inputSwitch>
+        </div>
+        <div class="col-2">
+          <p>Verify Quantity</p>
+          <p-inputSwitch [(ngModel)]="checkQuantity" (ngModelChange)="OnChangeParametrization()"></p-inputSwitch>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 my-4">
+      <form [formGroup]="form" (ngSubmit)="SubmitForm()">
+        <div class="row">
+          <div class="col-6">
+            <p-password [weakLabel]="'Fraco'" [mediumLabel]="'Média'" [strongLabel]="'Forte'" [promptLabel]="'Escreva uma palavra-passe'"
+                        formControlName="password" [(ngModel)]="password" [toggleMask]="true" [feedback]="true" [placeholder]="'Escreva uma palavra-passe'">
+              <ng-template pTemplate="footer">
+                <p-divider></p-divider>
+                <p class="mt-2">Sugestões</p>
+                <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                  <li *ngIf="checkLower" [style.color]="password | fhPasswordValidation:'lowercase'">Pelo menos uma letra minúscula</li>
+                  <li *ngIf="checkUpper" [style.color]="password | fhPasswordValidation:'uppercase'">Pelo menos uma letra maiúscula</li>
+                  <li *ngIf="checkNumeric" [style.color]="password | fhPasswordValidation:'numeric'">Pelo menos um dígito</li>
+                  <li *ngIf="checkSymbol" [style.color]="password | fhPasswordValidation:'symbol'">Pelo menos um caractér especial</li>
+                  <li *ngIf="checkSpace" [style.color]="password | fhPasswordValidation:'space'">Sem espaços</li>
+                  <li *ngIf="checkQuantity" [style.color]="password | fhPasswordValidation:'quantity'">Mínimo 8 caractéres</li>
+                </ul>
+              </ng-template>
+            </p-password>
+          </div>
+          <div class="col-6">
+            <p-button class="mx-1" type="submit" [disabled]="!form.valid">Testar Regex</p-button>
+            <p-button class="mx-1" (click)="GetRegex()">Obter Regex</p-button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="regex" class="col-12 my-2">
+      <div class="alert alert-info" role="alert" [innerText]="regex"></div>
+    </div>
+    <div *ngIf="alert" class="col-12 my-2">
+      <div class="alert alert-success" role="alert" [innerText]="alert"></div>
+    </div>
+  </div>
+</div>
